@@ -11,8 +11,8 @@ stages:
 
 lint:
   stage: checks
-  script: gradle check
-
+  script: gradle checkstyleMain
+  
 test:
   stage: checks
   script:
