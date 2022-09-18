@@ -9,9 +9,14 @@ image: sneakypatriki/cs2511-gradle:latest
 stages:
   - checks
 
+lint:
+  stage: checks
+  script: gradle checkstyleMain
+  
 test:
   stage: checks
   script:
     - gradle test
     - bash extract_coverage.sh
   coverage: '/\d+%/'
+
