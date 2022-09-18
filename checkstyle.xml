@@ -60,6 +60,7 @@
   <!-- See https://checkstyle.org/config_sizes.html -->
   <module name="FileLength"/>
   <module name="LineLength">
+    <property name="max" value="120"/>
     <property name="fileExtensions" value="java"/>
   </module>
 
@@ -101,14 +102,14 @@
     <module name="LocalVariableName"/>
     <module name="MemberName"/>
     <module name="MethodName"/>
-    <module name="PackageName"/>
+    <!-- <module name="PackageName"/> -->
     <module name="ParameterName"/>
     <module name="StaticVariableName"/>
     <module name="TypeName"/>
 
     <!-- Checks for imports                              -->
     <!-- See https://checkstyle.org/config_imports.html -->
-    <module name="AvoidStarImport"/>
+    <!-- <module name="AvoidStarImport"/> -->
     <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
     <module name="RedundantImport"/>
     <module name="UnusedImports">
@@ -136,24 +137,24 @@
     <!-- Modifier Checks                                    -->
     <!-- See https://checkstyle.org/config_modifier.html -->
     <module name="ModifierOrder"/>
-    <module name="RedundantModifier"/>
+    <!-- <module name="RedundantModifier"/> -->
 
     <!-- Checks for blocks. You know, those {}'s         -->
     <!-- See https://checkstyle.org/config_blocks.html -->
     <module name="AvoidNestedBlocks"/>
     <module name="EmptyBlock"/>
     <module name="LeftCurly"/>
-    <module name="NeedBraces"/>
+    <!-- <module name="NeedBraces"/> -->
     <module name="RightCurly"/>
 
     <!-- Checks for common coding problems               -->
     <!-- See https://checkstyle.org/config_coding.html -->
     <module name="EmptyStatement"/>
-    <module name="EqualsHashCode"/>
-    <module name="HiddenField"/>
+    <!-- <module name="EqualsHashCode"/> -->
+    <!-- <module name="HiddenField"/> -->
     <module name="IllegalInstantiation"/>
-    <module name="InnerAssignment"/>
-    <module name="MagicNumber"/>
+    <!-- <module name="InnerAssignment"/> -->
+    <!-- <module name="MagicNumber"/> -->
     <module name="MissingSwitchDefault"/>
     <module name="MultipleVariableDeclarations"/>
     <module name="SimplifyBooleanExpression"/>
@@ -161,9 +162,9 @@
 
     <!-- Checks for class design                         -->
     <!-- See https://checkstyle.org/config_design.html -->
-    <module name="DesignForExtension"/>
+    <!-- <module name="DesignForExtension"/> -->
     <!-- <module name="FinalClass"/> -->
-    <module name="HideUtilityClassConstructor"/>
+    <!-- <module name="HideUtilityClassConstructor"/> -->
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier"/>
 

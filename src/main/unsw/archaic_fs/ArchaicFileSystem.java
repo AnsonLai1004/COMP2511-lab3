@@ -1,9 +1,6 @@
 package unsw.archaic_fs;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -11,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import unsw.archaic_fs.exceptions.*;
+
 /**
  * Represents an 'archaic' file system. This allows you to 'open' files, 'make'
  * directories, 'write' to a file, and so on.
- * 
+ *
  * Operates 'entirely' virtually, with no actual file write operations performed
- * 
+ *
  * Doesn't support ~ but does support `..`
  */
 public class ArchaicFileSystem {
@@ -32,7 +31,7 @@ public class ArchaicFileSystem {
         // create base folders
         // i.e. /usr/
         // / root directory
-        currentPath.add(_mkdir(-1, ""));
+        currentPath.add(mkdir(-1, ""));
         try {
             mkdir("/usr/", false, false);
         } catch (IOException e) {
@@ -48,7 +47,7 @@ public class ArchaicFileSystem {
         }
     }
 
-    private Inode _mkfile(int parent, String filename) {
+    private Inode mkfile(int parent, String filename) {
         int inode = inodeLookup.size();
         Inode file = Inode.createFile(filename, inode, parent);
         inodeLookup.add(file);
@@ -57,7 +56,7 @@ public class ArchaicFileSystem {
         return file;
     }
 
-    private Inode _mkdir(int parent, String dirName) {
+    private Inode mkdir(int parent, String dirName) {
         int inode = inodeLookup.size();
         Inode dir = Inode.createFolder(dirName, inode, parent);
         folderMap.put(inode, new ArrayList<>());
@@ -123,7 +122,7 @@ public class ArchaicFileSystem {
             Inode inode = lookupInodeInDirInode(pathComponents[i], current, DeviceType.FOLDER);
             if (inode == null) {
                 if (createParentDirectories || i == pathComponents.length - 1) {
-                    current = _mkdir(current.getInode(), pathComponents[i]);
+                    current = mkdir(current.getInode(), pathComponents[i]);
                     folderMap.get(current.getParentInode()).add(current.getInode());
                 } else {
                     throw new UNSWFileNotFoundException(formPathForInode(current) + "/" + pathComponents[i]);
@@ -214,12 +213,12 @@ public class ArchaicFileSystem {
 
         if (opts.contains(FileWriteOptions.CREATE)) {
             if (inode == null) {
-                inode = _mkfile(current.getInode(), filename);
+                inode = mkfile(current.getInode(), filename);
             } else {
                 throw new UNSWFileAlreadyExistsException(formPathForInode(current) + "/" + filename);
             }
         } else if (inode == null && opts.contains(FileWriteOptions.CREATE_IF_NOT_EXISTS)) {
-            inode = _mkfile(current.getInode(), filename);
+            inode = mkfile(current.getInode(), filename);
         } else if (inode == null) {
             // doesn't exist
             throw new UNSWFileNotFoundException(formPathForInode(current) + "/" + filename);

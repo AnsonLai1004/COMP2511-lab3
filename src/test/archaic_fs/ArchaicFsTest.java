@@ -8,10 +8,7 @@ import unsw.archaic_fs.FileWriteOptions;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import unsw.archaic_fs.exceptions.UNSWFileAlreadyExistsException;
-import unsw.archaic_fs.exceptions.UNSWFileNotFoundException;
 import unsw.archaic_fs.exceptions.UNSWNoSuchFileException;
 import java.util.EnumSet;
 
