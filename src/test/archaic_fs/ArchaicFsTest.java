@@ -16,7 +16,6 @@ public class ArchaicFsTest {
     @Test
     public void testCdInvalidDirectory() {
         ArchaicFileSystem fs = new ArchaicFileSystem();
- 
         // Try to change directory to an invalid one
         assertThrows(UNSWNoSuchFileException.class, () -> {
             fs.cd("/usr/bin/cool-stuff");

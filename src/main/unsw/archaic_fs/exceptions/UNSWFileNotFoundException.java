@@ -1,5 +1,11 @@
 package unsw.archaic_fs.exceptions;
 
-public class UNSWFileNotFoundException {
+import java.io.IOException;
+
+public class UNSWFileNotFoundException extends IOException {
+
+    public UNSWFileNotFoundException(String string) {
+        super(string);
+    }
 
 }
