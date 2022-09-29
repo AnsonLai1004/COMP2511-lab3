@@ -83,6 +83,9 @@ public class ArchaicFsTest {
             fs.writeToFile(
                 "test.txt", "My Content", EnumSet.of(FileWriteOptions.CREATE_IF_NOT_EXISTS, FileWriteOptions.TRUNCATE)
             );
+            fs.writeToFile(
+                "test2.txt", "My Content", EnumSet.of(FileWriteOptions.CREATE_IF_NOT_EXISTS, FileWriteOptions.APPEND)
+            );
         });
         assertThrows(UNSWFileNotFoundException.class, () -> {
             fs.writeToFile("new.txt", "My Content", EnumSet.of(FileWriteOptions.TRUNCATE));
