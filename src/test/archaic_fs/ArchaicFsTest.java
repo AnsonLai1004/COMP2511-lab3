@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import unsw.archaic_fs.exceptions.UNSWFileAlreadyExistsException;
+import unsw.archaic_fs.exceptions.UNSWFileNotFoundException;
 import unsw.archaic_fs.exceptions.UNSWNoSuchFileException;
 import java.util.EnumSet;
 
@@ -64,4 +66,34 @@ public class ArchaicFsTest {
     // - File Writing/Reading with various options (appending for example)
     // - Cd'ing .. on the root most directory (shouldn't error should just remain on root directory)
     // - many others...
+    @Test
+    public void testFileWriting() {
+        ArchaicFileSystem fs = new ArchaicFileSystem();
+        assertThrows(IllegalArgumentException.class, () -> {
+            fs.writeToFile("test.txt", "My Content", EnumSet.of(FileWriteOptions.APPEND, FileWriteOptions.TRUNCATE));
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            fs.writeToFile("test.txt", "My Content", EnumSet.of(FileWriteOptions.CREATE));
+        });
+        assertThrows(UNSWFileAlreadyExistsException.class, () -> {
+            fs.writeToFile("test.txt", "My Content", EnumSet.of(FileWriteOptions.CREATE, FileWriteOptions.TRUNCATE));
+            fs.writeToFile("test.txt", "My Content", EnumSet.of(FileWriteOptions.CREATE, FileWriteOptions.TRUNCATE));
+        });
+        assertDoesNotThrow(() -> {
+            fs.writeToFile(
+                "test.txt", "My Content", EnumSet.of(FileWriteOptions.CREATE_IF_NOT_EXISTS, FileWriteOptions.TRUNCATE)
+            );
+        });
+        assertThrows(UNSWFileNotFoundException.class, () -> {
+            fs.writeToFile("new.txt", "My Content", EnumSet.of(FileWriteOptions.TRUNCATE));
+        });
+    }
+
+    @Test
+    public void testReadFileNotExist() {
+        ArchaicFileSystem fs = new ArchaicFileSystem();
+        assertThrows(UNSWFileNotFoundException.class, () -> {
+            fs.readFromFile("NotExist.txt");
+        });
+    }
 }
